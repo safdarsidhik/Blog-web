@@ -64,30 +64,27 @@ app.post('/api/login', (req, res) => {
                 return res.status(400).send({ error: 'Invalid password' });
             }
 
-            // Send response with user data and role
+            // Send user data and role in the response
             res.json({ user: { id: user.id, username: user.username, role: user.role } });
         });
     });
 });
 
-// Protected route for admins to create posts
+// Route to create posts (no userId required anymore)
 app.post('/api/posts', (req, res) => {
-    const { title, content, userId } = req.body;
+    const { title, content } = req.body;
 
-    // Query to check if the user is an admin
-    db.query('SELECT * FROM users WHERE id = ?', [userId], (err, results) => {
-        if (err || results.length === 0 || results[0].role !== 'admin') {
-            return res.status(403).send({ error: 'Only admins can create posts' });
+    if (!title || !content) {
+        return res.status(400).send({ error: 'Title and content are required' });
+    }
+
+    // Insert the post into the database
+    const query = 'INSERT INTO posts (title, content) VALUES (?, ?)';
+    db.query(query, [title, content], (err, result) => {
+        if (err) {
+            return res.status(500).send({ error: 'Error creating post' });
         }
-
-        // Insert the post into the database
-        const query = 'INSERT INTO posts (title, content, user_id) VALUES (?, ?, ?)';
-        db.query(query, [title, content, userId], (err, result) => {
-            if (err) {
-                return res.status(500).send({ error: 'Error creating post' });
-            }
-            res.status(201).send({ message: 'Post created successfully', postId: result.insertId });
-        });
+        res.status(201).send({ message: 'Post created successfully', postId: result.insertId });
     });
 });
 
@@ -100,6 +97,31 @@ app.get('/api/posts', (req, res) => {
         res.json(results); // Send the posts as JSON to the frontend
     });
 });
+
+// Update an existing post
+app.put('/api/posts/:id', (req, res) => {
+    const { title, content } = req.body;
+    const postId = req.params.id;
+
+    // Validate input
+    if (!title || !content) {
+        return res.status(400).send({ error: 'Title and content are required' });
+    }
+
+    // Update the post in the database
+    const query = 'UPDATE posts SET title = ?, content = ? WHERE id = ?';
+    db.query(query, [title, content, postId], (err, result) => {
+        if (err) {
+            return res.status(500).send({ error: 'Error updating post' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).send({ error: 'Post not found' });
+        }
+        res.status(200).send({ message: 'Post updated successfully' });
+    });
+});
+
+
 
 // Start the server
 const PORT = 5000;

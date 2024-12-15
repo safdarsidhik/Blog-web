@@ -1,38 +1,291 @@
-.App {
-  text-align: center;
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+body {
+  background: url("../images/blog-2355684_1280.jpg");
+  background-size: cover; /* Ensures the image covers the entire screen */
+  background-position: center; /* Centers the image */
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  min-height: 100vh;
+}
+
+
+/* Container */
+.container {
+  
+  max-width: 1000px;
+  margin: 20px auto;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+/* For specific login title or form */
+.container h1, .container h2 {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+
+
+/* Card Styles for Blog Posts */
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  margin: 15px auto;
+  width: 90%;
+  max-width: 1200px; /* Ensures it doesn't become too wide */
+  text-align: justify;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.blog-page h2 {
+  margin: 20px 0;
+  font-size: 2rem;
+  color: #333;
+}
+
+/* Blog Post Styling */
+.post-item h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.post-item p {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Buttons */
+button {
+  background-color: #4a90e2; /* Blue buttons */
+  color: white;
+  padding: 10px 15px;
+  margin: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #357ab7; /* Slightly darker blue on hover */
+}
+
+/* Edit Form */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.edit-input,
+.edit-textarea {
+  margin: 5px 0;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  resize: none;
+}
+
+.edit-textarea {
+  height: 100px;
+}
+
+/* Logout Button */
+.logout-btn {
+  background-color: #e74c3c;
+}
+
+.logout-btn:hover {
+  background-color: #ff0000;
+}
+
+/* Headings */
+h1, h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 1.8rem;
+}
+
+/* Role Selection */
+label {
+  font-weight: bold;
+  margin-right: 10px;
+  color: #555;
+}
+
+/* Error Message */
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+/* Form Container */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align inputs */
+  width: 100%; /* Full width of the container */
+  max-width: 500px; /* Increase max-width for larger box */
+  margin: 0 auto;
+  padding: 30px; /* Increase padding for more spacious feel */
+}
+
+
+/* Input Fields and Select */
+input,
+select,
+textarea {
+  width: 100%; /* Full width of the form container */
+  max-width: 400px; /* Set a max width for inputs */
+  padding: 12px; /* Slightly increase padding for a more comfortable size */
+  margin: 10px 0; /* Add vertical spacing */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Add a subtle glow effect */
+}
+textarea {
+  height: 120px; /* Adjust the height for a proper textarea size */
+  resize: vertical; /* Allow users to resize vertically */
+}
+/* Buttons */
+button {
+  width: 100%; /* Full width */
+  max-width: 300px; /* Match button width with inputs */
+  padding: 10px;
+  margin: 10px 0; /* Spacing around buttons */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #4a90e2;
+  color: white;
+  font-size: 1rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #357ab7;
+}
+
+/* Form Toggle Button */
+button:last-of-type {
+  background-color: rgb(0, 64, 255);
+}
+
+button:last-of-type:hover {
+  background-color: rgb(15, 163, 255);
+}
+
+/* Create Post Section */
+.create-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+}
+
+.create-form h4 {
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.create-form input,
+.create-form textarea {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.create-form textarea {
+  height: 120px;
+  resize: none;
+}
+
+.create-form button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 10px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.create-form button:hover {
+  background-color: #3d9205;
+}
+
+/* Add a slight margin to separate Create Post from Posts */
+.create-form + .card {
+  margin-top: 30px;
+}
+
+/* Center the Create Post Section */
+.blog-page .create-form {
+  text-align: center;
+}
+
+/* Blog Page Responsiveness */
+@media (max-width: 768px) {
+  .create-form {
+    width: 90%;
   }
-  to {
-    transform: rotate(360deg);
+
+  .card {
+    width: 95%;
   }
 }
+
+/* Center Edit Button */
+.post-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+}
+
+.post-item .edit-btn {
+  margin-top: 10px;
+  background-color: rgb(0, 64, 255); /* Orange for Edit Button */
+  color: white;
+}
+
+.post-item .edit-btn:hover {
+  background-color: rgb(15, 163, 255); /* Darker Orange on Hover */
+}
+
+
