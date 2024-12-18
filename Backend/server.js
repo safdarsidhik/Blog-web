@@ -121,7 +121,44 @@ app.put('/api/posts/:id', (req, res) => {
     });
 });
 
+// Fetch comments for a specific post
+app.get('/api/posts/:postId/comments', (req, res) => {
+    const { postId } = req.params;
 
+    // Fetch comments from the database for this post
+    db.query('SELECT * FROM comments WHERE post_id = ?', [postId], (err, results) => {
+        if (err) {
+            return res.status(500).send({ error: 'Error fetching comments' });
+        }
+        res.json(results); // Send the comments as JSON to the frontend
+    });
+});
+
+// Add a comment for a specific post
+app.post('/api/posts/:postId/comments', (req, res) => {
+    const { postId } = req.params;
+    const { content } = req.body;
+
+    // Logging received data for debugging
+    console.log(`Received comment for postId ${postId}: ${content}`);
+
+    // Validate that content is provided
+    if (!content) {
+        console.log('No content provided');
+        return res.status(400).send({ error: 'Comment content is required' });
+    }
+
+    // Insert the comment into the database
+    const query = 'INSERT INTO comments (post_id, content) VALUES (?, ?)';
+    db.query(query, [postId, content], (err, result) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).send({ error: 'Error adding comment' });
+        }
+        console.log('Comment added successfully');
+        res.status(201).send({ message: 'Comment added successfully' });
+    });
+});
 
 // Start the server
 const PORT = 5000;
